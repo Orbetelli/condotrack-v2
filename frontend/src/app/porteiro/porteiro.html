@@ -1,0 +1,441 @@
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      </svg>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-item" [class.active]="tabAtiva==='dashboard'"
+              data-tip="Dashboard" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='entregas'"
+              data-tip="Entregas" (click)="mudarTab('entregas')">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        </svg>
+        <div class="sb-badge"></div>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='moradores'"
+              data-tip="Moradores" (click)="mudarTab('moradores')">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='historico'"
+              data-tip="Histórico" (click)="mudarTab('historico')">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='chat'"
+              data-tip="Mensagens" (click)="mudarTab('chat')">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </button>
+      <div class="sb-divider"></div>
+      <button class="sb-item" data-tip="Sair">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+    </nav>
+    <div class="sb-avatar">CT</div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+    <header class="header">
+      <div>
+        <div class="header-greeting">{{ getSaudacao() }}, {{ getNomeUsuario() }} 👋</div>
+        <div class="header-sub">CondoTrack · Painel do Porteiro</div>
+      </div>
+      <div class="header-actions">
+        <div class="header-notif">
+          <svg viewBox="0 0 24 24" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </div>
+        <button class="btn-nova-entrega" (click)="abrirModalNova()">
+          <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Nova entrega
+        </button>
+      </div>
+    </header>
+
+    <!-- Nav tabs -->
+    <nav class="nav-tabs">
+      <div class="nav-tab" [class.active]="tabAtiva==='dashboard'" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='entregas'" (click)="mudarTab('entregas')">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Entregas
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='moradores'" (click)="mudarTab('moradores')">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Moradores
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='historico'" (click)="mudarTab('historico')">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Histórico
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='chat'" (click)="mudarTab('chat')">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Mensagens
+      </div>
+    </nav>
+
+    <!-- Body -->
+    <div class="body">
+
+      <!-- TAB: Dashboard -->
+      <ng-container *ngIf="tabAtiva === 'dashboard'">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.aguardando }}</div>
+              <div class="stat-icon" style="background:#FEF3C7">
+                <svg viewBox="0 0 24 24" stroke="#92400E" stroke-width="2" fill="none">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Aguardando retirada</div>
+            <span class="stat-badge" style="background:#FEF3C7;color:#92400E">Pendentes</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.retirado }}</div>
+              <div class="stat-icon" style="background:#F0FDF4">
+                <svg viewBox="0 0 24 24" stroke="#166534" stroke-width="2.5" fill="none">
+                  <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Retiradas hoje</div>
+            <span class="stat-badge" style="background:#F0FDF4;color:#166534">Concluído</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.expirado }}</div>
+              <div class="stat-icon" style="background:#FEF2F2">
+                <svg viewBox="0 0 24 24" stroke="#991B1B" stroke-width="2" fill="none">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Expiradas (+5 dias)</div>
+            <span class="stat-badge" style="background:#FEF2F2;color:#991B1B">Atenção</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.total }}</div>
+              <div class="stat-icon" style="background:#EDE9FE">
+                <svg viewBox="0 0 24 24" stroke="#6D28D9" stroke-width="2" fill="none">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Total registrado</div>
+            <span class="stat-badge" style="background:#EDE9FE;color:#5B21B6">Geral</span>
+          </div>
+        </div>
+
+        <div class="search-row">
+          <input class="search-box" type="text" [(ngModel)]="busca" placeholder="Buscar por apartamento ou transportadora..." />
+          <span class="filter-chip" [class.active]="filtroAtivo==='todos'" (click)="filtroAtivo='todos'">Todos</span>
+          <span class="filter-chip" [class.active]="filtroAtivo==='aguardando'" (click)="filtroAtivo='aguardando'">Aguardando</span>
+          <span class="filter-chip" [class.active]="filtroAtivo==='notificado'" (click)="filtroAtivo='notificado'">Notificado</span>
+          <span class="filter-chip" [class.active]="filtroAtivo==='retirado'" (click)="filtroAtivo='retirado'">Retirado</span>
+          <span class="filter-chip" [class.active]="filtroAtivo==='expirado'" (click)="filtroAtivo='expirado'">Expirado</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#F59E0B"></div>
+                Aguardando / Notificado
+              </div>
+              <span class="status-count" style="background:#FEF3C7;color:#92400E">{{ pendentes.length }}</span>
+            </div>
+            <div *ngFor="let e of pendentes">
+              <div class="entry" (click)="abrirDetalhe(e.id)">
+                <div class="entry-dot" [style.background]="getStatusConfig(e.status).dot"></div>
+                <div class="entry-info">
+                  <div class="entry-apto">{{ e.apto }}</div>
+                  <div class="entry-sub">{{ e.trans }} · {{ e.data }} {{ e.hora }}{{ e.volumes > 1 ? ' · ' + e.volumes + ' volumes' : '' }}</div>
+                </div>
+                <span class="entry-badge" [style.background]="getStatusConfig(e.status).bg" [style.color]="getStatusConfig(e.status).color">
+                  {{ getStatusConfig(e.status).label }}
+                </span>
+                <button class="entry-btn">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="pendentes.length === 0" class="entry-empty">Nenhuma entrega pendente</div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#34D399"></div>
+                Retiradas hoje
+              </div>
+              <span class="status-count" style="background:#F0FDF4;color:#166534">{{ retiradas.length }}</span>
+            </div>
+            <div *ngFor="let e of retiradas">
+              <div class="entry" (click)="abrirDetalhe(e.id)">
+                <div class="entry-dot" [style.background]="getStatusConfig(e.status).dot"></div>
+                <div class="entry-info">
+                  <div class="entry-apto">{{ e.apto }}</div>
+                  <div class="entry-sub">{{ e.trans }} · {{ e.data }} {{ e.hora }}</div>
+                </div>
+                <span class="entry-badge" [style.background]="getStatusConfig(e.status).bg" [style.color]="getStatusConfig(e.status).color">
+                  {{ getStatusConfig(e.status).label }}
+                </span>
+                <button class="entry-btn">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="retiradas.length === 0" class="entry-empty">Nenhuma retirada hoje</div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Entregas -->
+      <ng-container *ngIf="tabAtiva === 'entregas'">
+        <div style="margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">Todas as entregas</div>
+          <div class="search-row">
+            <input class="search-box" type="text" [(ngModel)]="buscaEntregas" placeholder="Buscar por apartamento ou transportadora..." />
+            <span class="filter-chip" [class.active]="filtroEntregasAtivo==='todos'" (click)="filtroEntregasAtivo='todos'">Todos</span>
+            <span class="filter-chip" [class.active]="filtroEntregasAtivo==='aguardando'" (click)="filtroEntregasAtivo='aguardando'">Aguardando</span>
+            <span class="filter-chip" [class.active]="filtroEntregasAtivo==='notificado'" (click)="filtroEntregasAtivo='notificado'">Notificado</span>
+            <span class="filter-chip" [class.active]="filtroEntregasAtivo==='retirado'" (click)="filtroEntregasAtivo='retirado'">Retirado</span>
+            <span class="filter-chip" [class.active]="filtroEntregasAtivo==='expirado'" (click)="filtroEntregasAtivo='expirado'">Expirado</span>
+          </div>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let e of entregasListaFiltradas">
+            <div class="entry" (click)="abrirDetalhe(e.id)">
+              <div class="entry-dot" [style.background]="getStatusConfig(e.status).dot"></div>
+              <div class="entry-info">
+                <div class="entry-apto">{{ e.apto }}</div>
+                <div class="entry-sub">{{ e.trans }} · {{ e.data }} {{ e.hora }}{{ e.volumes > 1 ? ' · ' + e.volumes + ' volumes' : '' }}</div>
+              </div>
+              <span class="entry-badge" [style.background]="getStatusConfig(e.status).bg" [style.color]="getStatusConfig(e.status).color">
+                {{ getStatusConfig(e.status).label }}
+              </span>
+              <button class="entry-btn">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="entregasListaFiltradas.length === 0" class="entry-empty">Nenhuma entrega encontrada</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Moradores -->
+      <ng-container *ngIf="tabAtiva === 'moradores'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">
+          Moradores cadastrados · <span style="color:var(--n-400);font-weight:400">{{ moradores.length }} no total</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let m of moradores" class="entry">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--p-100);color:var(--p-700);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              {{ getIniciais(m.nome) }}
+            </div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ m.nome }}</div>
+              <div class="entry-sub">Apto {{ m.apto }}</div>
+            </div>
+            <span class="entry-badge" [style.background]="m.status === 'ativo' ? '#F0FDF4' : '#F5F5F5'" [style.color]="m.status === 'ativo' ? '#166534' : '#737373'">
+              {{ m.status === 'ativo' ? 'Ativo' : 'Pendente' }}
+            </span>
+          </div>
+          <div *ngIf="moradores.length === 0" class="entry-empty">Nenhum morador encontrado</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Histórico -->
+      <ng-container *ngIf="tabAtiva === 'historico'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">Histórico por apartamento</div>
+        <div class="status-card" style="padding:20px">
+          <div style="font-size:13px;color:var(--n-400);text-align:center">Em breve</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Chat -->
+      <ng-container *ngIf="tabAtiva === 'chat'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">Mensagens</div>
+        <div class="status-card" style="padding:20px">
+          <div style="font-size:13px;color:var(--n-400);text-align:center">Em breve</div>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: nova entrega -->
+<div class="modal-overlay" [class.open]="modalNovaAberto" (click)="fecharModalNova()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">Nova entrega</div>
+      <button class="modal-close" (click)="fecharModalNova()">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-field">
+      <label class="ct-label">Morador / Apartamento</label>
+      <input
+        class="ct-input"
+        type="text"
+        [(ngModel)]="buscaMorador"
+        (input)="onBuscaMorador()"
+        placeholder="Digite o nome ou apartamento..."
+        autocomplete="off"
+      />
+      <div *ngIf="resultadosMorador.length > 0 && !moradorSelecionado"
+           style="border:1.5px solid var(--n-200);border-top:none;border-radius:0 0 var(--radius-md) var(--radius-md);max-height:180px;overflow-y:auto;background:var(--n-0);">
+        <div *ngFor="let m of resultadosMorador"
+             (click)="selecionarMorador(m)"
+             style="padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--n-100);font-size:13px;">
+          <div style="font-weight:600;color:var(--n-900)">{{ m.nome }}</div>
+          <div style="font-size:11px;color:var(--n-400)">Apto {{ m.apto }}</div>
+        </div>
+      </div>
+      <div *ngIf="moradorSelecionado"
+           style="display:flex;align-items:center;gap:8px;background:var(--p-50);border:1.5px solid var(--p-300);border-radius:var(--radius-md);padding:8px 12px;margin-top:6px">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--p-800)">{{ moradorSelecionado.nome }}</div>
+          <div style="font-size:11px;color:var(--p-600)">Apto {{ moradorSelecionado.apto }}</div>
+        </div>
+        <button (click)="limparMorador()"
+                style="background:none;border:none;cursor:pointer;color:var(--p-400);font-size:18px;line-height:1">×</button>
+      </div>
+    </div>
+
+    <div class="modal-field" style="margin-top:14px">
+      <label class="ct-label">Transportadora</label>
+      <select class="ct-input" [(ngModel)]="novaEntrega.transportadora">
+        <option value="">Selecione...</option>
+        <option value="Correios">Correios</option>
+        <option value="Amazon">Amazon</option>
+        <option value="Mercado Livre">Mercado Livre</option>
+        <option value="Shopee">Shopee</option>
+        <option value="iFood">iFood</option>
+        <option value="Rappi">Rappi</option>
+        <option value="DHL">DHL</option>
+        <option value="FedEx">FedEx</option>
+        <option value="UPS">UPS</option>
+        <option value="Jadlog">Jadlog</option>
+        <option value="Total Express">Total Express</option>
+        <option value="Azul Cargo">Azul Cargo</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </div>
+
+    <div class="modal-field" style="margin-top:14px">
+      <label class="ct-label">Volumes</label>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button (click)="decrementarVolumes()"
+                style="width:32px;height:32px;border-radius:var(--radius-sm);border:1.5px solid var(--n-200);background:var(--n-0);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--n-600)">−</button>
+        <span style="font-size:16px;font-weight:600;color:var(--n-900);min-width:24px;text-align:center">{{ novaEntrega.volumes }}</span>
+        <button (click)="incrementarVolumes()"
+                style="width:32px;height:32px;border-radius:var(--radius-sm);border:1.5px solid var(--n-200);background:var(--n-0);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--n-600)">+</button>
+      </div>
+    </div>
+    <div class="modal-field" style="margin-top:14px">
+      <label class="ct-label">Observação (opcional)</label>
+      <textarea
+        class="ct-input"
+        [(ngModel)]="novaEntrega.obs"
+        placeholder="Ex: caixa grande, frágil..."
+        rows="2"
+        style="resize:none"
+      ></textarea>
+    </div>
+
+    <div *ngIf="erroNovaEntrega" class="ct-error" style="display:block;margin-top:10px">
+      {{ erroNovaEntrega }}
+    </div>
+
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="ct-btn-ghost" (click)="fecharModalNova()">Cancelar</button>
+      <button class="ct-btn-primary" (click)="salvarEntrega()" [disabled]="salvandoEntrega">
+        <span *ngIf="salvandoEntrega" class="spinner"></span>
+        <span *ngIf="!salvandoEntrega" style="display:flex;align-items:center;gap:6px">
+          <svg viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor" style="width:14px;height:14px" stroke-linecap="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+          Registrar entrega
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: detalhe da entrega -->
+<div class="modal-overlay" [class.open]="modalDetalheAberto" (click)="fecharDetalhe()">
+  <div class="modal" (click)="$event.stopPropagation()" *ngIf="entregaDetalhe">
+    <div class="modal-header">
+      <div class="modal-title">Entrega · Apto {{ entregaDetalhe.apto }}</div>
+      <button class="modal-close" (click)="fecharDetalhe()">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="detail-row"><span class="detail-label">Apartamento</span><span class="detail-value">{{ entregaDetalhe.apto }}</span></div>
+    <div class="detail-row"><span class="detail-label">Destinatário</span><span class="detail-value">{{ entregaDetalhe.morador }}</span></div>
+    <div class="detail-row"><span class="detail-label">Transportadora</span><span class="detail-value">{{ entregaDetalhe.trans }}</span></div>
+    <div class="detail-row"><span class="detail-label">Recebido em</span><span class="detail-value">{{ entregaDetalhe.data }} {{ entregaDetalhe.hora }}</span></div>
+    <div class="detail-row"><span class="detail-label">Volumes</span><span class="detail-value">{{ entregaDetalhe.volumes }}</span></div>
+    <div class="detail-row"><span class="detail-label">Observações</span><span class="detail-value">{{ entregaDetalhe.obs || '—' }}</span></div>
+    <div class="detail-row">
+      <span class="detail-label">Status</span>
+      <span class="entry-badge" [style.background]="getStatusConfig(entregaDetalhe.status).bg" [style.color]="getStatusConfig(entregaDetalhe.status).color">
+        {{ getStatusConfig(entregaDetalhe.status).label }}
+      </span>
+    </div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="ct-btn-ghost" (click)="fecharDetalhe()">Fechar</button>
+      <button class="ct-btn-primary"
+              *ngIf="entregaDetalhe.status === 'aguardando' || entregaDetalhe.status === 'notificado'"
+              (click)="confirmarRetirada()">
+        <svg viewBox="0 0 24 24" stroke-width="2.5" fill="none" stroke="currentColor" style="width:15px;height:15px" stroke-linecap="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Confirmar retirada
+      </button>
+    </div>
+  </div>
+</div>

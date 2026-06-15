@@ -1,0 +1,246 @@
+<div class="shell">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      </svg>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-item" [class.active]="tabAtiva==='dashboard'" data-tip="Dashboard" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='entregas'" data-tip="Entregas" (click)="mudarTab('entregas')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='moradores'" data-tip="Moradores" (click)="mudarTab('moradores')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='porteiros'" data-tip="Porteiros" (click)="mudarTab('porteiros')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </button>
+      <div class="sb-divider"></div>
+      <button class="sb-item" data-tip="Sair" (click)="logout()">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+    </nav>
+    <div class="sb-avatar">{{ getIniciais(getNomeUsuario()) }}</div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+    <header class="header">
+      <div>
+        <div class="header-greeting">{{ getSaudacao() }}, {{ getNomeUsuario() }} 👋</div>
+        <div class="header-sub">CondoTrack · Painel do Síndico</div>
+      </div>
+    </header>
+
+    <!-- Nav tabs -->
+    <nav class="nav-tabs">
+      <div class="nav-tab" [class.active]="tabAtiva==='dashboard'" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='entregas'" (click)="mudarTab('entregas')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Entregas
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='moradores'" (click)="mudarTab('moradores')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Moradores
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='porteiros'" (click)="mudarTab('porteiros')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Porteiros
+      </div>
+    </nav>
+
+    <!-- Body -->
+    <div class="body">
+
+      <!-- TAB: Dashboard -->
+      <ng-container *ngIf="tabAtiva === 'dashboard' && stats">
+        <div class="stats-grid" style="grid-template-columns: repeat(4,1fr)">
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.entregas.pendentes }}</div>
+              <div class="stat-icon" style="background:#FEF3C7">
+                <svg viewBox="0 0 24 24" stroke="#92400E" stroke-width="2" fill="none">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Entregas pendentes</div>
+            <span class="stat-badge" style="background:#FEF3C7;color:#92400E">Atenção</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.moradores.ativos }}</div>
+              <div class="stat-icon" style="background:#EDE9FE">
+                <svg viewBox="0 0 24 24" stroke="#6D28D9" stroke-width="2" fill="none">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Moradores ativos</div>
+            <span class="stat-badge" style="background:#EDE9FE;color:#5B21B6">Total: {{ stats.moradores.total }}</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.apartamentos.ocupados }}</div>
+              <div class="stat-icon" style="background:#F0FDF4">
+                <svg viewBox="0 0 24 24" stroke="#166534" stroke-width="2" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Aptos ocupados</div>
+            <span class="stat-badge" style="background:#F0FDF4;color:#166534">Total: {{ stats.apartamentos.total }}</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.entregas.total }}</div>
+              <div class="stat-icon" style="background:#F5F3FF">
+                <svg viewBox="0 0 24 24" stroke="#7C3AED" stroke-width="2" fill="none">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Total de entregas</div>
+            <span class="stat-badge" style="background:#F5F3FF;color:#7C3AED">Geral</span>
+          </div>
+        </div>
+
+        <!-- Resumo cards -->
+        <div class="cards-grid" style="margin-top:16px">
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#F59E0B"></div>
+                Resumo de Entregas
+              </div>
+            </div>
+            <div class="detail-row"><span class="detail-label">Aguardando/Notificado</span><span class="detail-value">{{ stats.entregas.pendentes }}</span></div>
+            <div class="detail-row"><span class="detail-label">Retiradas</span><span class="detail-value">{{ stats.entregas.retiradas }}</span></div>
+            <div class="detail-row"><span class="detail-label">Expiradas</span><span class="detail-value">{{ stats.entregas.expiradas }}</span></div>
+            <div class="detail-row"><span class="detail-label">Total</span><span class="detail-value">{{ stats.entregas.total }}</span></div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#A78BFA"></div>
+                Resumo do Condomínio
+              </div>
+            </div>
+            <div class="detail-row"><span class="detail-label">Moradores ativos</span><span class="detail-value">{{ stats.moradores.ativos }}</span></div>
+            <div class="detail-row"><span class="detail-label">Porteiros ativos</span><span class="detail-value">{{ stats.porteiros.ativos }}</span></div>
+            <div class="detail-row"><span class="detail-label">Aptos ocupados</span><span class="detail-value">{{ stats.apartamentos.ocupados }}</span></div>
+            <div class="detail-row"><span class="detail-label">Aptos disponíveis</span><span class="detail-value">{{ stats.apartamentos.disponiveis }}</span></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Entregas -->
+      <ng-container *ngIf="tabAtiva === 'entregas'">
+        <div class="search-row" style="margin-bottom:14px">
+          <span class="filter-chip" [class.active]="filtroStatus==='todos'"      (click)="filtroStatus='todos';aplicarFiltro()">Todos</span>
+          <span class="filter-chip" [class.active]="filtroStatus==='aguardando'" (click)="filtroStatus='aguardando';aplicarFiltro()">Aguardando</span>
+          <span class="filter-chip" [class.active]="filtroStatus==='notificado'" (click)="filtroStatus='notificado';aplicarFiltro()">Notificado</span>
+          <span class="filter-chip" [class.active]="filtroStatus==='retirado'"   (click)="filtroStatus='retirado';aplicarFiltro()">Retirado</span>
+          <span class="filter-chip" [class.active]="filtroStatus==='expirado'"   (click)="filtroStatus='expirado';aplicarFiltro()">Expirado</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let e of entregas" class="entry">
+            <div class="entry-dot" [style.background]="getStatusBadge(e.status).bg"></div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ e.apto }} — {{ e.morador }}</div>
+              <div class="entry-sub">{{ e.trans }} · {{ e.data }} {{ e.hora }}{{ e.volumes > 1 ? ' · ' + e.volumes + ' volumes' : '' }}</div>
+            </div>
+            <span class="entry-badge"
+                  [style.background]="getStatusBadge(e.status).bg"
+                  [style.color]="getStatusBadge(e.status).color">
+              {{ getStatusBadge(e.status).label }}
+            </span>
+          </div>
+          <div *ngIf="entregas.length === 0" class="entry-empty">Nenhuma entrega encontrada</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Moradores -->
+      <ng-container *ngIf="tabAtiva === 'moradores'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">
+          Moradores · <span style="color:var(--n-400);font-weight:400">{{ moradores.length }} cadastrados</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let m of moradores" class="entry">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--p-100);color:var(--p-700);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              {{ getIniciais(m.nome) }}
+            </div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ m.nome }}</div>
+              <div class="entry-sub">{{ m.apto }} · {{ m.email }}</div>
+            </div>
+            <button (click)="toggleStatusMorador(m)"
+                    class="ct-btn-ghost"
+                    style="padding:5px 12px;font-size:11px;border-radius:99px;"
+                    [style.background]="m.status === 'ativo' ? '#F0FDF4' : '#FEF2F2'"
+                    [style.color]="m.status === 'ativo' ? '#166534' : '#991B1B'"
+                    [style.borderColor]="m.status === 'ativo' ? '#BBF7D0' : '#FECACA'">
+              {{ m.status === 'ativo' ? 'Ativo' : 'Inativo' }}
+            </button>
+          </div>
+          <div *ngIf="moradores.length === 0" class="entry-empty">Nenhum morador cadastrado</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Porteiros -->
+      <ng-container *ngIf="tabAtiva === 'porteiros'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">
+          Porteiros · <span style="color:var(--n-400);font-weight:400">{{ porteiros.length }} cadastrados</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let p of porteiros" class="entry">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--p-100);color:var(--p-700);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              {{ getIniciais(p.nome) }}
+            </div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ p.nome }}</div>
+              <div class="entry-sub">{{ p.email }}{{ p.turno ? ' · Turno: ' + p.turno : '' }}</div>
+            </div>
+            <button (click)="toggleStatusPorteiro(p)"
+                    class="ct-btn-ghost"
+                    style="padding:5px 12px;font-size:11px;border-radius:99px;"
+                    [style.background]="p.status === 'ativo' ? '#F0FDF4' : '#FEF2F2'"
+                    [style.color]="p.status === 'ativo' ? '#166534' : '#991B1B'"
+                    [style.borderColor]="p.status === 'ativo' ? '#BBF7D0' : '#FECACA'">
+              {{ p.status === 'ativo' ? 'Ativo' : 'Inativo' }}
+            </button>
+          </div>
+          <div *ngIf="porteiros.length === 0" class="entry-empty">Nenhum porteiro cadastrado</div>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

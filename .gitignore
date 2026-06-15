@@ -42,3 +42,12 @@ Thumbs.db
 .nx/workspace-data
 .claude/worktrees
 .claude/settings.local.json
+
+.angular
+
+__screenshots__/
+
+# Environment variables
+.env
+.env.local
+.env.*.local

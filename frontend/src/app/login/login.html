@@ -1,0 +1,97 @@
+<div class="login-shell">
+  <div class="login-box">
+
+    <!-- Logo -->
+    <div class="login-top anim-1">
+      <div class="ct-logo">
+        <div class="ct-logo-icon">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+        </div>
+        <span class="ct-logo-name">CondoTrack</span>
+      </div>
+    </div>
+
+    <!-- Card -->
+    <div class="ct-card login-card anim-2">
+      <div class="login-heading">
+        <h2>{{ getSaudacao() }}! 👋</h2>
+        <p>Entre com seu e-mail e senha para acessar</p>
+      </div>
+
+      <div class="form-field anim-3">
+        <label class="ct-label" for="email">E-mail</label>
+        <input
+          class="ct-input"
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          placeholder="seu@email.com"
+          autocomplete="email"
+          (keyup.enter)="handleLogin()"
+        />
+      </div>
+
+      <div class="form-field anim-3" style="margin-top: 14px;">
+        <label class="ct-label" for="senha">Senha</label>
+        <div class="ct-input-wrap">
+          <input
+            class="ct-input"
+            [type]="mostrarSenha ? 'text' : 'password'"
+            id="senha"
+            [(ngModel)]="senha"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            (keyup.enter)="handleLogin()"
+          />
+          <button type="button" class="eye-btn" (click)="toggleSenha()">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"
+                 stroke="currentColor" style="width:16px;height:16px">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="ct-error" *ngIf="erro()" style="display:block; margin-top: 10px;">
+        {{ erro() }}
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button
+          class="ct-btn-primary"
+          (click)="handleLogin()"
+          [disabled]="carregando()"
+          style="width: 100%;"
+        >
+          <span *ngIf="carregando()" class="spinner"></span>
+          <span *ngIf="!carregando()" style="display:flex;align-items:center;gap:8px;justify-content:center">
+            Entrar
+            <svg viewBox="0 0 24 24" stroke-width="2.5" fill="none"
+                 stroke="currentColor" style="width:15px;height:15px">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="login-footer anim-5">
+      Ainda não tem conta?
+      <a href="/cadastro" style="color:var(--p-600);font-weight:600;text-decoration:none">
+        Cadastre-se como morador
+      </a>
+    </div>
+
+    <div class="login-bottom anim-6">
+      <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      CondoTrack v2.0
+    </div>
+
+  </div>
+</div>
