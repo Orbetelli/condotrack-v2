@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { PorteiroModule } from './porteiro/porteiro.module';
 import { MoradorModule } from './morador/morador.module';
 import { SindicoModule } from './sindico/sindico.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { SindicoModule } from './sindico/sindico.module';
     PorteiroModule,
     MoradorModule,
     SindicoModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

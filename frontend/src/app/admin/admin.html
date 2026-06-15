@@ -1,0 +1,342 @@
+<div class="shell">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      </svg>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-item" [class.active]="tabAtiva==='dashboard'" data-tip="Dashboard" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='condominios'" data-tip="Condomínios" (click)="mudarTab('condominios')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='usuarios'" data-tip="Usuários" (click)="mudarTab('usuarios')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </button>
+      <button class="sb-item" [class.active]="tabAtiva==='novo-sindico'" data-tip="Novo Síndico" (click)="mudarTab('novo-sindico')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <line x1="19" y1="8" x2="19" y2="14"/>
+          <line x1="22" y1="11" x2="16" y2="11"/>
+        </svg>
+      </button>
+      <div class="sb-divider"></div>
+      <button class="sb-item" data-tip="Sair" (click)="logout()">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+    </nav>
+    <div class="sb-avatar">{{ getIniciais(getNomeUsuario()) }}</div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+    <header class="header">
+      <div>
+        <div class="header-greeting">{{ getSaudacao() }}, {{ getNomeUsuario() }} 👋</div>
+        <div class="header-sub">CondoTrack · Painel do Admin</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-nova-entrega" *ngIf="tabAtiva==='condominios'" (click)="abrirModalCondo()">
+          <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" fill="none">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Novo condomínio
+        </button>
+      </div>
+    </header>
+
+    <!-- Nav tabs -->
+    <nav class="nav-tabs">
+      <div class="nav-tab" [class.active]="tabAtiva==='dashboard'" (click)="mudarTab('dashboard')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='condominios'" (click)="mudarTab('condominios')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Condomínios
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='usuarios'" (click)="mudarTab('usuarios')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Usuários
+      </div>
+      <div class="nav-tab" [class.active]="tabAtiva==='novo-sindico'" (click)="mudarTab('novo-sindico')">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        Novo Síndico
+      </div>
+    </nav>
+
+    <!-- Body -->
+    <div class="body">
+
+      <!-- TAB: Dashboard -->
+      <ng-container *ngIf="tabAtiva === 'dashboard' && stats">
+        <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.condominios.ativos }}</div>
+              <div class="stat-icon" style="background:#EDE9FE">
+                <svg viewBox="0 0 24 24" stroke="#6D28D9" stroke-width="2" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Condomínios ativos</div>
+            <span class="stat-badge" style="background:#EDE9FE;color:#5B21B6">Total: {{ stats.condominios.total }}</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.usuarios.total }}</div>
+              <div class="stat-icon" style="background:#F0FDF4">
+                <svg viewBox="0 0 24 24" stroke="#166534" stroke-width="2" fill="none">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Total de usuários</div>
+            <span class="stat-badge" style="background:#F0FDF4;color:#166534">Plataforma</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-num">{{ stats.entregas.pendentes }}</div>
+              <div class="stat-icon" style="background:#FEF3C7">
+                <svg viewBox="0 0 24 24" stroke="#92400E" stroke-width="2" fill="none">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-label">Entregas pendentes</div>
+            <span class="stat-badge" style="background:#FEF3C7;color:#92400E">Total: {{ stats.entregas.total }}</span>
+          </div>
+        </div>
+
+        <div class="cards-grid" style="margin-top:16px">
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#A78BFA"></div>
+                Distribuição de usuários
+              </div>
+            </div>
+            <div class="detail-row"><span class="detail-label">Síndicos</span><span class="detail-value">{{ stats.usuarios.sindicos }}</span></div>
+            <div class="detail-row"><span class="detail-label">Porteiros</span><span class="detail-value">{{ stats.usuarios.porteiros }}</span></div>
+            <div class="detail-row"><span class="detail-label">Moradores</span><span class="detail-value">{{ stats.usuarios.moradores }}</span></div>
+            <div class="detail-row"><span class="detail-label">Total</span><span class="detail-value">{{ stats.usuarios.total }}</span></div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-head">
+              <div class="status-card-title">
+                <div class="status-dot" style="background:#34D399"></div>
+                Ações rápidas
+              </div>
+            </div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
+              <button class="ct-btn-primary" (click)="mudarTab('condominios');abrirModalCondo()" style="width:100%">
+                + Novo condomínio
+              </button>
+              <button class="ct-btn-ghost" (click)="mudarTab('novo-sindico')" style="width:100%;justify-content:center">
+                + Novo síndico
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Condomínios -->
+      <ng-container *ngIf="tabAtiva === 'condominios'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">
+          Condomínios · <span style="color:var(--n-400);font-weight:400">{{ condominios.length }} cadastrados</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let c of condominios" class="entry">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--p-100);color:var(--p-700);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" style="width:16px;height:16px">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ c.nome }}</div>
+              <div class="entry-sub">{{ c.cidade }}{{ c.uf ? ' — ' + c.uf : '' }}{{ c.endereco ? ' · ' + c.endereco : '' }}</div>
+            </div>
+            <button (click)="toggleStatusCondo(c)"
+                    class="ct-btn-ghost"
+                    style="padding:5px 12px;font-size:11px;border-radius:99px;"
+                    [style.background]="c.status === 'ativo' ? '#F0FDF4' : '#FEF2F2'"
+                    [style.color]="c.status === 'ativo' ? '#166534' : '#991B1B'"
+                    [style.borderColor]="c.status === 'ativo' ? '#BBF7D0' : '#FECACA'">
+              {{ c.status === 'ativo' ? 'Ativo' : 'Inativo' }}
+            </button>
+          </div>
+          <div *ngIf="condominios.length === 0" class="entry-empty">Nenhum condomínio cadastrado</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Usuários -->
+      <ng-container *ngIf="tabAtiva === 'usuarios'">
+        <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:12px">
+          Usuários · <span style="color:var(--n-400);font-weight:400">{{ usuarios.length }} cadastrados</span>
+        </div>
+        <div class="status-card">
+          <div *ngFor="let u of usuarios" class="entry">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--p-100);color:var(--p-700);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              {{ getIniciais(u.nome) }}
+            </div>
+            <div class="entry-info">
+              <div class="entry-apto">{{ u.nome }}</div>
+              <div class="entry-sub">{{ u.email }} · {{ getPerfillabel(u.perfil) }}{{ u.condominio ? ' · ' + u.condominio : '' }}</div>
+            </div>
+            <button (click)="abrirResetSenha(u)"
+                    class="ct-btn-ghost"
+                    style="padding:5px 10px;font-size:11px;margin-right:6px">
+              Reset senha
+            </button>
+            <button (click)="toggleStatusUsuario(u)"
+                    class="ct-btn-ghost"
+                    style="padding:5px 12px;font-size:11px;border-radius:99px;"
+                    [style.background]="u.status === 'ativo' ? '#F0FDF4' : '#FEF2F2'"
+                    [style.color]="u.status === 'ativo' ? '#166534' : '#991B1B'"
+                    [style.borderColor]="u.status === 'ativo' ? '#BBF7D0' : '#FECACA'">
+              {{ u.status === 'ativo' ? 'Ativo' : 'Inativo' }}
+            </button>
+          </div>
+          <div *ngIf="usuarios.length === 0" class="entry-empty">Nenhum usuário cadastrado</div>
+        </div>
+      </ng-container>
+
+      <!-- TAB: Novo Síndico -->
+      <ng-container *ngIf="tabAtiva === 'novo-sindico'">
+        <div style="max-width:480px">
+          <div style="font-size:13px;font-weight:700;color:var(--n-900);margin-bottom:16px">Criar novo síndico</div>
+
+          <div class="modal-field" style="margin-bottom:14px">
+            <label class="ct-label">Nome completo</label>
+            <input class="ct-input" type="text" [(ngModel)]="novoSindico.nome" placeholder="João da Silva"/>
+          </div>
+          <div class="modal-field" style="margin-bottom:14px">
+            <label class="ct-label">E-mail</label>
+            <input class="ct-input" type="email" [(ngModel)]="novoSindico.email" placeholder="joao@email.com"/>
+          </div>
+          <div class="modal-field" style="margin-bottom:14px">
+            <label class="ct-label">Senha inicial</label>
+            <input class="ct-input" type="password" [(ngModel)]="novoSindico.senha" placeholder="Mínimo 6 caracteres"/>
+          </div>
+          <div class="modal-field" style="margin-bottom:20px">
+            <label class="ct-label">Condomínio</label>
+            <select class="ct-input" [(ngModel)]="novoSindico.condominioId">
+              <option value="">Selecione o condomínio...</option>
+              <option *ngFor="let c of condominios" [value]="c.id">{{ c.nome }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="erroSindico" class="ct-error" style="display:block;margin-bottom:12px">{{ erroSindico }}</div>
+          <div *ngIf="sucessoSindico" style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-md);padding:10px 14px;color:#166534;font-size:13px;margin-bottom:12px">
+            ✓ {{ sucessoSindico }}
+          </div>
+
+          <button class="ct-btn-primary" (click)="salvarSindico()" [disabled]="salvandoSindico" style="width:100%">
+            <span *ngIf="salvandoSindico" class="spinner"></span>
+            <span *ngIf="!salvandoSindico">Criar síndico</span>
+          </button>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: novo condomínio -->
+<div class="modal-overlay" [class.open]="modalCondoAberto" (click)="fecharModalCondo()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">Novo condomínio</div>
+      <button class="modal-close" (click)="fecharModalCondo()">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-field" style="margin-bottom:14px">
+      <label class="ct-label">Nome *</label>
+      <input class="ct-input" type="text" [(ngModel)]="novoCondo.nome" placeholder="Residencial das Flores"/>
+    </div>
+    <div class="modal-field" style="margin-bottom:14px">
+      <label class="ct-label">Endereço</label>
+      <input class="ct-input" type="text" [(ngModel)]="novoCondo.endereco" placeholder="Rua das Acácias, 100"/>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px;gap:10px;margin-bottom:14px">
+      <div class="modal-field">
+        <label class="ct-label">Cidade</label>
+        <input class="ct-input" type="text" [(ngModel)]="novoCondo.cidade" placeholder="São Paulo"/>
+      </div>
+      <div class="modal-field">
+        <label class="ct-label">UF</label>
+        <input class="ct-input" type="text" [(ngModel)]="novoCondo.uf" placeholder="SP" maxlength="2"/>
+      </div>
+    </div>
+    <div class="modal-field" style="margin-bottom:14px">
+      <label class="ct-label">CNPJ (opcional)</label>
+      <input class="ct-input" type="text" [(ngModel)]="novoCondo.cnpj" placeholder="00.000.000/0001-00"/>
+    </div>
+    <div *ngIf="erroCondo" class="ct-error" style="display:block;margin-bottom:10px">{{ erroCondo }}</div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="ct-btn-ghost" (click)="fecharModalCondo()">Cancelar</button>
+      <button class="ct-btn-primary" (click)="salvarCondo()" [disabled]="salvandoCondo">
+        <span *ngIf="salvandoCondo" class="spinner"></span>
+        <span *ngIf="!salvandoCondo">Criar condomínio</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: reset senha -->
+<div class="modal-overlay" [class.open]="modalResetAberto" (click)="fecharResetSenha()">
+  <div class="modal" (click)="$event.stopPropagation()" *ngIf="usuarioReset">
+    <div class="modal-header">
+      <div class="modal-title">Resetar senha</div>
+      <button class="modal-close" (click)="fecharResetSenha()">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <p style="font-size:13px;color:var(--n-500);margin-bottom:16px">
+      Definir nova senha para <strong>{{ usuarioReset.nome }}</strong>
+    </p>
+    <div class="modal-field" style="margin-bottom:14px">
+      <label class="ct-label">Nova senha</label>
+      <input class="ct-input" type="password" [(ngModel)]="novaSenha" placeholder="Mínimo 6 caracteres"/>
+    </div>
+    <div *ngIf="erroReset" class="ct-error" style="display:block;margin-bottom:10px">{{ erroReset }}</div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="ct-btn-ghost" (click)="fecharResetSenha()">Cancelar</button>
+      <button class="ct-btn-primary" (click)="confirmarReset()" [disabled]="salvandoReset">
+        <span *ngIf="salvandoReset" class="spinner"></span>
+        <span *ngIf="!salvandoReset">Confirmar</span>
+      </button>
+    </div>
+  </div>
+</div>
